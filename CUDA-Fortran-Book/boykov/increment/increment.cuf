@@ -25,8 +25,7 @@ contains
   end subroutine increment
 end module simpleOps_m
 
-
-program incrementTest  
+subroutine incrementTest
   use cudafor
   use simpleOps_m
   implicit none
@@ -46,4 +45,4 @@ program incrementTest
   else
      write(*,*) 'Program Passed'
   endif
-end program incrementTest
+end subroutine incrementTest

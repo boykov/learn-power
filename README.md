@@ -8,3 +8,11 @@ CUDA Fortran Book
 
     cd CUDA-Fortran-Book
     module unload xl/13.1-15.1 && module load pgi/17.4 && make all
+
+Shared library
+--------------
+
+Add PGI Fortran shared library to GNU Fortran program.
+
+    cd CUDA-Fortran-Book/boykov/increment
+	make runinc
