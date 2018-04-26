@@ -23,7 +23,7 @@ endif
 
 # Uncomment the CUDAFLAGS line if you have hardware requirements that require
 # a specific compute capability
-#CUDAFLAGS = -Mcuda=cc12
+CUDAFLAGS = -Mcuda=cc60
 
 all: build run verify
 
