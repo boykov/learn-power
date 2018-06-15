@@ -2,11 +2,15 @@ program matrix_multiply
    use omp_lib
    use openacc
    implicit none
-   integer :: i, j, k, myid, m, n
+   integer :: i, j, k, myid, m, n, compiled_for, option
    integer, parameter :: fd = 11
    integer :: t1, t2, dt, count_rate, count_max
    real, allocatable, dimension(:,:) :: a, b, c
    real :: tmp, secs
+
+   open(fd,file='wallclocktime',form='formatted')
+
+   option = compiled_for(fd) ! 1-serial, 2-OpenMP, 3-OpenACC, 4-both
 
 !$omp parallel
 !$    myid = OMP_GET_THREAD_NUM()
@@ -61,3 +65,22 @@ program matrix_multiply
 
   close(fd)
 end program matrix_multiply
+
+integer function compiled_for(fd)
+implicit none
+integer :: fd
+#if defined _OPENMP && defined _OPENACC
+  compiled_for = 4
+  write(fd,"('This code is compiled with OpenMP & OpenACC')")
+#elif defined _OPENACC
+  compiled_for = 3
+  write(fd,"('This code is compiled with OpenACC')")
+#elif defined _OPENMP
+  compiled_for = 2
+  write(fd,"('This code is compiled with OpenMP')")
+#else
+  compiled_for = 1
+  write(fd,"('This code is compiled for serial operations')")
+#endif
+
+end function compiled_for
